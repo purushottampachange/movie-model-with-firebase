@@ -176,7 +176,11 @@ body::after {
     
 }
 
+#movieContainer{
 
+    display: flex;
+    flex-direction: row-reverse;
+}
 
 
 

@@ -141,29 +141,31 @@ const fetchMovies = async () => {
 
     let res = await MakeAPICall(movieURL, "GET", null);
 
-    let data = ConvertArray(res);
+    let data = ConvertArray(res).reverse();
 
     Templating(data);
 }
 
 fetchMovies();
 
-// const onSubmit = (eve) =>{
+const onSubmit = async(eve) =>{
 
-//     eve.preventDefault();
+    eve.preventDefault();
 
-//     let movieObj = {
+    let movieObj = {
 
-//         movieName : movieName.value,
-//         movieImg : movieImg.value,
-//         movieDesc : movieDesc.value,
-//         movieRating : movieRating.value,
-//     }
+        movieName : movieName.value,
+        movieImg : movieImg.value,
+        movieDesc : movieDesc.value,
+        movieRating : movieRating.value,
+    }
+    
+    let res = await MakeAPICall(movieURL,"POST",movieObj);
 
-
-// }
+    cl(res);
+}
 
 
 closeBtn.forEach(b => b.addEventListener("click", onHideShow))
 nfxBtn.addEventListener("click", onHideShow);
-// movieForm.addEventListener("submit", onSubmit);
+movieForm.addEventListener("submit", onSubmit);
