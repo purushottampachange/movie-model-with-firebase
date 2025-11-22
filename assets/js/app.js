@@ -203,7 +203,7 @@ const UIUpdate = (obj) => {
 
    `;
 
-   movieForm.reset();
+    movieForm.reset();
 
     onHideShow();
 }
@@ -292,6 +292,28 @@ const onUpdate = async () => {
     let res = await MakeAPICall(UPDATE_URL, "PATCH", UPDATE_OBJ);
 
     UIUpdate(res);
+
+}
+
+const onRemove = async (ele) => {
+
+    let result = await Swal.fire({
+        title: "Do you want to Remove Movie?",
+        showCancelButton: true,
+        confirmButtonText: "Remove",
+    })
+
+    if (result.isConfirmed) {
+
+        let REMOVE_ID = ele.closest(".col-md-3").id;
+
+        let REMOVE_URL = `${BaseURL}/movies/${REMOVE_ID}.json`;
+
+        let res = await MakeAPICall(REMOVE_URL, "DELETE", null);
+
+        ele.closest(".col-md-3").remove();
+
+    }
 
 }
 
