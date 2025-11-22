@@ -8,6 +8,7 @@ const rating = document.getElementById("rating");
 const nfxBtn = document.getElementById("nfxBtn");
 const movieModel = document.getElementById("movieModel");
 const backDrop = document.getElementById("backDrop");
+const spinner = document.getElementById("spinner");
 
 
 const submitBtn = document.getElementById("submitBtn");
@@ -64,6 +65,9 @@ const onHideShow = () => {
 
     movieModel.classList.toggle("active");
     backDrop.classList.toggle("active");
+    movieForm.reset();
+    submitBtn.classList.remove("d-none");
+    updateBtn.classList.add("d-none");
 }
 
 const Templating = (arr) => {
@@ -74,7 +78,7 @@ const Templating = (arr) => {
 
         res += `
         
-            <div class="col-md-3 mb-4">
+            <div class="col-md-3 mb-4" id="${m.id}">
                 <div class="card movieCard text-white">
                     <div class="card-header p-0">
                         <div class="row">
@@ -153,7 +157,60 @@ const CreateMovie = (obj, id) => {
     onHideShow();
 }
 
+const PatchData = (obj) => {
+
+    title.value = obj.title;
+    imgPath.value = obj.imgPath;
+    content.value = obj.content;
+    rating.value = obj.rating;
+
+    submitBtn.classList.add("d-none");
+    updateBtn.classList.remove("d-none");
+}
+
+const UIUpdate = (obj) => {
+
+    let card = document.getElementById(obj.id);
+
+    card.innerHTML = `
+     
+   
+                 <div class="card movieCard text-white">
+                    <div class="card-header p-0">
+                        <div class="row">
+                            <div class="col-10">
+                                <h5>${obj.title}</h5>
+                            </div>
+                            <div class="col-2">
+                                <h6> <span class="badge ${RatingClass(obj.rating)}">${obj.rating}</span></h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <figure>
+                            <img src=${obj.imgPath} alt="">
+                            <figcaption>
+                                <h5>${obj.title}</h5>
+                                <p>${obj.content}</p>
+                            </figcaption>
+                        </figure>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between p-0">
+                        <button class="btn btn-sm btn-success" onclick = "onEdit(this)">Edit</button>
+                        <button class="btn btn-sm btn-danger" onclick = "onRemove(this)">Remove</button>
+                    </div>
+                </div>
+
+   `;
+
+   movieForm.reset();
+
+    onHideShow();
+}
+
 const MakeAPICall = async (apiURL, method, msgBody) => {
+
+    spinner.classList.remove("d-none");
 
     msgBody = msgBody ? JSON.stringify(msgBody) : null;
 
@@ -179,6 +236,10 @@ const MakeAPICall = async (apiURL, method, msgBody) => {
         SnackBar("success", err);
 
     }
+    finally {
+
+        spinner.classList.add("d-none");
+    }
 }
 
 
@@ -193,6 +254,47 @@ const fetchMovies = async () => {
 
 fetchMovies();
 
+const onEdit = async (ele) => {
+
+    let EDIT_ID = ele.closest(".col-md-3").id;
+
+    cl(EDIT_ID);
+
+    let EDIT_URL = `${BaseURL}/movies/${EDIT_ID}.json`;
+
+    localStorage.setItem("EDIT_ID", EDIT_ID);
+
+    let res = await MakeAPICall(EDIT_URL, "GET", null);
+
+    onHideShow();
+
+    cl(res);
+
+    PatchData(res);
+
+}
+
+const onUpdate = async () => {
+
+    let UPDATE_ID = localStorage.getItem("EDIT_ID");
+
+    let UPDATE_URL = `${BaseURL}/movies/${UPDATE_ID}.json`;
+
+    let UPDATE_OBJ = {
+
+        title: title.value,
+        imgPath: imgPath.value,
+        content: content.value,
+        rating: rating.value,
+        id: UPDATE_ID
+    }
+
+    let res = await MakeAPICall(UPDATE_URL, "PATCH", UPDATE_OBJ);
+
+    UIUpdate(res);
+
+}
+
 const onSubmit = async (eve) => {
 
     eve.preventDefault();
@@ -204,15 +306,16 @@ const onSubmit = async (eve) => {
         content: content.value,
         rating: rating.value,
     }
-   
+
     cl(movieObj);
 
     let res = await MakeAPICall(movieURL, "POST", movieObj);
 
-    CreateMovie(movieObj,res.name);
+    CreateMovie(movieObj, res.name);
 }
 
 
 closeBtn.forEach(b => b.addEventListener("click", onHideShow))
 nfxBtn.addEventListener("click", onHideShow);
 movieForm.addEventListener("submit", onSubmit);
+updateBtn.addEventListener("click", onUpdate);
