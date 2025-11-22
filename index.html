@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./assets/css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-6 mt-4">
+                <a href="index.html" class="logo">
+                    <img src="./assets/images/logo.svg" alt="logo">
+                </a>
+            </div>
+            <div class="col-6 mt-4 d-flex justify-content-end align-items-start">
+                <button class="btn btn-sm nfxBtn" id="nfxBtn">Add Movie</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row" id="movieContainer">
+            <!-- <div class="col-md-3">
+                <div class="card movieCard text-white">
+                    <div class="card-header p-0">
+                        <div class="row">
+                            <div class="col-10">
+                                <h5>name of the moveie osnnd</h5>
+                            </div>
+                            <div class="col-2">
+                                <h6> <span class="badge badge-success">5</span></h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <figure>
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxPa706UOLbD7GoL8332E23b5IpOm2prAfVvJ6S-Wl4k9Xkg1msA5T83iqh-JXmhEd_mDdY1Uf2KUMsFayW3DBb-Nk77vLSZGjIIanvlt7&s=10" alt="">
+                            <figcaption>
+                                <h5>name</h5>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae deleniti officia
+                                    facilis exercitationem natus doloribus dolore maxime beatae nesciunt numquam
+                                    provident nobis eveniet ea, animi cumque, quis dolor in labore?</p>
+                            </figcaption>
+                        </figure>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between p-0">
+                        <button class="btn btn-sm btn-success">Edit</button>
+                        <button class="btn btn-sm btn-danger">Edit</button>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+
+    <div class="backDrop closeBtn" id="backDrop">
+
+    </div>
+
+    <div class="movieModel" id="movieModel">
+        <form id="movieForm">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h5>Enter Movie Details</h5>
+                    <i class="fa-solid fa-xmark fa-2x closeBtn" role="button"></i>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="movieName">Enter Name</label>
+                        <input type="text" class="form-control" id="movieName" required>
+                        <label for="movieImg">Enter ImgPath</label>
+                        <input type="text" class="form-control" id="movieImg" required>
+                        <label for="movieDesc">Enter Desc</label>
+                        <textarea class="form-control" id="movieDesc" required></textarea>
+
+                        <label for="movieRating">Enter Rating</label>
+                        <select id="movieRating" class="form-control">
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-footer d-flex justify-content-between">
+                    <button type="submit" class="btn btn-sm  btn-dark" id="submitBtn">Add Movie</button>
+                    <button type="button" class="btn btn-sm  btn-success d-none" id="updateBtn">Update Movie</button>
+                    <button type="submit" class="btn btn-sm  btn-danger closeBtn">Close</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="./assets/js/app.js"></script>
+</body>
+
+</html>
