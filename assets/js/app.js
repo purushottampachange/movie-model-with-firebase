@@ -1,10 +1,10 @@
 const cl = console.log;
 
 const movieForm = document.getElementById("movieForm");
-const movieName = document.getElementById("movieName");
-const movieImg = document.getElementById("movieImg");
-const movieDesc = document.getElementById("movieDesc");
-const movieRating = document.getElementById("movieRating");
+const title = document.getElementById("title");
+const imgPath = document.getElementById("imgPath");
+const content = document.getElementById("content");
+const rating = document.getElementById("rating");
 const nfxBtn = document.getElementById("nfxBtn");
 const movieModel = document.getElementById("movieModel");
 const backDrop = document.getElementById("backDrop");
@@ -108,6 +108,51 @@ const Templating = (arr) => {
     movieContainer.innerHTML = res;
 }
 
+const CreateMovie = (obj, id) => {
+
+    let div = document.createElement("div");
+
+    div.className = "col-md-3 mb-4";
+
+    div.id = id;
+
+    div.innerHTML = `
+      
+             <div class="card movieCard text-white">
+                    <div class="card-header p-0">
+                        <div class="row">
+                            <div class="col-10">
+                                <h5>${obj.title}</h5>
+                            </div>
+                            <div class="col-2">
+                                <h6> <span class="badge ${RatingClass(obj.rating)}">${obj.rating}</span></h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <figure>
+                            <img src=${obj.imgPath} alt="">
+                            <figcaption>
+                                <h5>${obj.title}</h5>
+                                <p>${obj.content}</p>
+                            </figcaption>
+                        </figure>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between p-0">
+                        <button class="btn btn-sm btn-success">Edit</button>
+                        <button class="btn btn-sm btn-danger">Remove</button>
+                    </div>
+                </div>
+    
+    `;
+
+    movieContainer.prepend(div);
+
+    movieForm.reset();
+
+    onHideShow();
+}
+
 const MakeAPICall = async (apiURL, method, msgBody) => {
 
     msgBody = msgBody ? JSON.stringify(msgBody) : null;
@@ -148,21 +193,23 @@ const fetchMovies = async () => {
 
 fetchMovies();
 
-const onSubmit = async(eve) =>{
+const onSubmit = async (eve) => {
 
     eve.preventDefault();
 
     let movieObj = {
 
-        movieName : movieName.value,
-        movieImg : movieImg.value,
-        movieDesc : movieDesc.value,
-        movieRating : movieRating.value,
+        title: title.value,
+        imgPath: imgPath.value,
+        content: content.value,
+        rating: rating.value,
     }
-    
-    let res = await MakeAPICall(movieURL,"POST",movieObj);
+   
+    cl(movieObj);
 
-    cl(res);
+    let res = await MakeAPICall(movieURL, "POST", movieObj);
+
+    CreateMovie(movieObj,res.name);
 }
 
 
