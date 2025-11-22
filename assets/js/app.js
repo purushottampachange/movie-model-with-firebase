@@ -96,8 +96,8 @@ const Templating = (arr) => {
                         </figure>
                     </div>
                     <div class="card-footer d-flex justify-content-between p-0">
-                        <button class="btn btn-sm btn-success">Edit</button>
-                        <button class="btn btn-sm btn-danger">Remove</button>
+                        <button class="btn btn-sm btn-success" onclick = "onEdit(this)">Edit</button>
+                        <button class="btn btn-sm btn-danger" onclick = "onRemove(this)">Remove</button>
                     </div>
                 </div>
             </div>
@@ -139,8 +139,8 @@ const CreateMovie = (obj, id) => {
                         </figure>
                     </div>
                     <div class="card-footer d-flex justify-content-between p-0">
-                        <button class="btn btn-sm btn-success">Edit</button>
-                        <button class="btn btn-sm btn-danger">Remove</button>
+                        <button class="btn btn-sm btn-success" onclick = "onEdit(this)">Edit</button>
+                        <button class="btn btn-sm btn-danger" onclick = "onRemove(this)">Remove</button>
                     </div>
                 </div>
     
